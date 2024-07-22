@@ -1,4 +1,4 @@
-# Online Ecommerce Mart API1
+# Online Ecommerce Mart API
 
 ## Project Overview
 
