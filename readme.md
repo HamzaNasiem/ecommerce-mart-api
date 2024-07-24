@@ -1,51 +1,68 @@
-# 02_kafka_messaging
+# Online Ecommerce Mart API
 
-### AIOKafkaProducer
+## Project Overview
 
-AIOKafkaProducer is a high-level, asynchronous message producer.
+This project involves developing an API for an online mart using an event-driven microservices architecture. It leverages various technologies like FastAPI, Docker, Docker Compose, PostgreSQL, Kafka, and Kong. The system is designed to handle high volumes of transactions and data efficiently.
 
-Example of AIOKafkaProducer usage:
+## Objectives
 
-```
-from aiokafka import AIOKafkaProducer
+- Develop a scalable API for an online mart using microservices.
+- Implement an event-driven architecture to manage asynchronous communication between services.
+- Use FastAPI for API development and Docker for containerization.
+- Ensure seamless development and deployment with Docker Compose.
+- Manage API requests with Kong API Gateway.
+- Persist data using PostgreSQL.
 
-# Kafka Producer as a dependency
-async def get_kafka_producer():
-    producer = AIOKafkaProducer(bootstrap_servers='broker:19092')
-    await producer.start()
-    try:
-        # Produce message
-        await producer.send_and_wait("my_topic", b"Super message")
-    finally:
-        await producer.stop()
-```
+## Technologies
 
-### AIOKafkaConsumer
-AIOKafkaConsumer is a high-level, asynchronous message consumer. It interacts with the assigned Kafka Group Coordinator node to allow multiple consumers to load balance consumption of topics (requires kafka >= 0.9.0.0).
+- **FastAPI**: A high-performance web framework for building APIs with Python.
+- **Docker**: For containerizing microservices, ensuring consistency across environments.
+- **Docker Compose**: For orchestrating multi-container Docker applications.
+- **PostgreSQL**: A powerful, open-source relational database system.
+- **Kafka**: A distributed event streaming platform for building real-time data pipelines.
+- **Kong**: An open-source API Gateway for managing and routing API requests.
 
-Example of AIOKafkaConsumer usage:
+## Microservices
 
-```
-from aiokafka import AIOKafkaConsumer
-import asyncio
+- **User Service**: Manages user authentication, registration, and profiles.
+- **Product Service**: Manages product catalog, including CRUD operations for products.
+- **Order Service**: Handles order creation, updating, and tracking.
+- **Inventory Service**: Manages stock levels and inventory updates.
+- **Notification Service**: Sends notifications (email, SMS) to users about order statuses and other updates.
+- **Payment Service**: Processes payments and manages transaction records.
 
-async def consume_messages():
-    consumer = AIOKafkaConsumer(
-        'my_topic', 'my_other_topic',
-        bootstrap_servers='localhost:9092',
-        group_id="my-group")
-    # Get cluster layout and join group `my-group`
-    await consumer.start()
-    try:
-        # Consume messages
-        async for msg in consumer:
-            print("consumed: ", msg.topic, msg.partition, msg.offset,
-                  msg.key, msg.value, msg.timestamp)
-    finally:
-        # Will leave consumer group; perform autocommit if enabled.
-        await consumer.stop()
+## Setup and Running
 
-asyncio.create_task(consume_messages())
-```
+1. **Clone the Repository**
 
-https://github.com/aio-libs/aiokafka
+   ```bash
+   git clone github.com/HamzaNasiem/ecommerce-mart-api
+   ```
+
+2. **Setup Docker Containers**
+
+   Run the following command to start the Docker containers:
+
+   ```bash
+   docker compose --profile database up -d
+   ```
+
+3. **Environment Variables**
+
+   This project does not use a `.env` file. Make sure to set any necessary environment variables directly in your Docker configuration or local setup.
+
+4. **Testing and Development**
+
+   For development, ensure all services are running and interact with the API as needed. Update or add configurations as required.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+Feel free to adjust any specifics or add more details as needed!
+
+## Contact
+
+For any questions, contact (ziaee.pk@gmail.com).
